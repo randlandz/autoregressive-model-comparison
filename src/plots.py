@@ -60,3 +60,56 @@ def plot_sample(input_window, target, save_path):
 
     plt.savefig(save_path, dpi=150)
     plt.close()
+
+def plot_loss_curves(train_losses, val_losses, save_path):
+    plt.figure(figsize=(10, 4))
+
+    plt.plot(train_losses, label="Training Loss")
+    plt.plot(val_losses, label="Validation Loss")
+
+    plt.title("MLP Training and Validation Loss")
+    plt.xlabel("Epoch")
+    plt.ylabel("MSE Loss")
+    plt.legend()
+
+    plt.tight_layout()
+
+    save_path = Path(save_path)
+    save_path.parent.mkdir(parents=True, exist_ok=True)
+
+    plt.savefig(save_path, dpi=150)
+    plt.close()
+
+def plot_predictions_vs_targets(
+        predictions,
+        targets,
+        save_path,
+        num_steps=200
+):
+    predictions = predictions.squeeze().numpy()[:num_steps]
+    targets = targets.squeeze().numpy()[:num_steps]
+
+    plt.figure(figsize=(10, 4))
+
+    plt.plot(
+        predictions,
+        label="Prediction"
+    )
+    plt.plot(
+        targets,
+        label="Actual"
+    )
+
+    plt.title("MLP Predictions on Test Data")
+    plt.xlabel("Time Step")
+    plt.ylabel("Normalized Value")
+    plt.legend()
+
+    plt.tight_layout()
+    
+    save_path = Path(save_path)
+    save_path.parent.mkdir(parents=True, exist_ok=True)
+
+    plt.savefig(save_path, dpi=150)
+    plt.close()
+
