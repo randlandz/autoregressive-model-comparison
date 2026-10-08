@@ -3,7 +3,7 @@ import torch.nn as nn
 
 from src.data import build_datasets
 from src.train import create_dataloaders, train_model   
-from src.models.mlp import MLP
+from src.models.lstm import LSTM
 
 from src.plots import plot_loss_curves
 from src.plots import plot_predictions_vs_targets
@@ -23,7 +23,7 @@ train_loader, val_loader, test_loader = create_dataloaders(
     batch_size=32
 )
 
-model = MLP(window_size=20, hidden_size=64)
+model = LSTM(1, 64)
 loss_fn = nn.MSELoss()
 optimizer = torch.optim.Adam(
     model.parameters(),
@@ -52,8 +52,8 @@ train_losses, val_losses = train_model(
 plot_loss_curves(
     train_losses,
     val_losses,
-    model_name="MLP",
-    save_path="results/figures/mlp_loss.png"
+    model_name="LSTM",
+    save_path="results/figures/lstm_loss.png"
 )
 
 avg_test_loss, predictions, targets = evaluate_model(
@@ -70,6 +70,6 @@ print("Targets shape:", targets.shape)
 plot_predictions_vs_targets(
     predictions,
     targets,
-    model_name="MLP",
-    save_path="results/figures/mlp_predictions.png"
+    model_name="LSTM",
+    save_path="results/figures/lstm_predictions.png"
 )

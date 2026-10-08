@@ -61,13 +61,13 @@ def plot_sample(input_window, target, save_path):
     plt.savefig(save_path, dpi=150)
     plt.close()
 
-def plot_loss_curves(train_losses, val_losses, save_path):
+def plot_loss_curves(train_losses, val_losses, model_name, save_path):
     plt.figure(figsize=(10, 4))
 
     plt.plot(train_losses, label="Training Loss")
     plt.plot(val_losses, label="Validation Loss")
 
-    plt.title("MLP Training and Validation Loss")
+    plt.title(f"{model_name} Training and Validation Loss")
     plt.xlabel("Epoch")
     plt.ylabel("MSE Loss")
     plt.legend()
@@ -84,6 +84,7 @@ def plot_predictions_vs_targets(
         predictions,
         targets,
         save_path,
+        model_name,
         num_steps=200
 ):
     predictions = predictions.squeeze().numpy()[:num_steps]
@@ -100,7 +101,7 @@ def plot_predictions_vs_targets(
         label="Actual"
     )
 
-    plt.title("MLP Predictions on Test Data")
+    plt.title(f"{model_name} Predictions on Test Data")
     plt.xlabel("Time Step")
     plt.ylabel("Normalized Value")
     plt.legend()
