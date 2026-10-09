@@ -66,6 +66,10 @@ avg_test_loss, predictions, targets = evaluate_model(
 print("Test loss:", avg_test_loss)
 print("Predictions shape:", predictions.shape)
 print("Targets shape:", targets.shape)
+print(
+    "Parameters:",
+    sum(p.numel() for p in model.parameters())
+)
 
 plot_predictions_vs_targets(
     predictions,
