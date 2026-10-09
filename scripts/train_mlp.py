@@ -12,6 +12,8 @@ from src.evaluate import evaluate_model
 
 from src.utils import set_seed
 
+from src.results import save_model_results
+
 set_seed(42)
 
 train_dataset, val_dataset, test_dataset, stats = build_datasets()
@@ -39,7 +41,7 @@ else:
 
 print("Using device:", device)
 
-train_losses, val_losses = train_model(
+train_losses, val_losses, best_epoch, best_val_loss = train_model(
     model,
     train_loader,
     val_loader,
@@ -66,9 +68,16 @@ avg_test_loss, predictions, targets = evaluate_model(
 print("Test loss:", avg_test_loss)
 print("Predictions shape:", predictions.shape)
 print("Targets shape:", targets.shape)
+
+parameter_count = sum(
+    p.numel()
+    for p in model.parameters()
+    if p.requires_grad
+)
+
 print(
     "Parameters:",
-    sum(p.numel() for p in model.parameters())
+    parameter_count
 )
 
 plot_predictions_vs_targets(
@@ -76,4 +85,12 @@ plot_predictions_vs_targets(
     targets,
     model_name="MLP",
     save_path="results/figures/mlp_predictions.png"
+)
+
+save_model_results(
+    model_name="MLP",
+    parameters=parameter_count,
+    best_epoch=best_epoch,
+    best_val_loss=best_val_loss,
+    test_loss=avg_test_loss
 )

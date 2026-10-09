@@ -64,3 +64,50 @@ For train/validation/test split, input windows are created after splitting the w
 2. RNN did not outperform the simplest MLP in this given task.
 3. LSTM did achieve a lower test MSE compared to plain RNN, but required substantially more parameters.
 4. Overall, model complexity increased much faster compared to predictive performance. A tradeoff between accuracy and parameter efficiency is observed in this experiment.
+
+
+## How to Run
+### 1. Clone the repository
+```bash
+git clone <https://github.com/randlandz/autoregressive-model-comparison.git>
+cd autoregressive-model-comparison
+```
+
+### 2. Create a virtual environment
+```bash
+python -m venv .venv
+```
+Actitave it on macOS/Linux:
+```bash
+source .venv/bin/activate
+```
+or on Windows:
+```powershell
+.venv\Scripts\activate
+```
+
+
+### 3. Install dependencies 
+```bash
+python -m pip install -r requirements.txt
+```
+For GPU acceleration, install a PyTorch build appropriate for your system and GPU.
+
+### 4. Inspect the generated dataset
+```bash
+python -m scripts.inspect_data
+```
+
+### 5. Train the models
+```bash
+python -m scripts.train_mlp
+python -m scripts.train_rnn
+python -m scripts.train_lstm
+python -m scripts.train_attention
+```
+Training scripts will save the loss and prediction figures under `results/figures/`
+
+### 6. Generate comparison figures
+```bash
+python -m scripts.compare_models
+```

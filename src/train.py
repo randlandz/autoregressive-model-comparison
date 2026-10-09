@@ -99,7 +99,7 @@ def train_model(
     print("Best epoch:", best_epoch)
     print("Best val loss:", best_val_loss)
 
-    return train_losses, val_losses
+    return train_losses, val_losses, best_epoch, best_val_loss
 
         
 
